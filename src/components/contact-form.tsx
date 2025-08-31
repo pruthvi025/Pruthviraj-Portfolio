@@ -23,16 +23,24 @@ export function ContactForm() {
   });
 
   const onSubmit = async (values: Values) => {
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
-    if (res.ok) {
-      toast.success("Message sent!");
-      reset();
-    } else {
-      toast.error("Failed to send message.");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      
+      const data = await res.json();
+      
+      if (res.ok && data.success) {
+        toast.success(data.message || "Message sent successfully!");
+        reset();
+      } else {
+        toast.error(data.error || "Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      console.error("Contact form error:", error);
+      toast.error("Failed to send message. Please try again.");
     }
   };
 

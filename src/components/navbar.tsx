@@ -8,6 +8,7 @@ import { Menu } from "lucide-react";
 const links = [
   { href: "#hero", label: "Home" },
   { href: "#about", label: "About" },
+  { href: "#achievements", label: "Achievements" },
   { href: "#projects", label: "Projects" },
   { href: "#experience", label: "Experience" },
   { href: "#contact", label: "Contact" },
@@ -28,7 +29,7 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-2">
           <ThemeToggle />
           <Button asChild size="sm" className="rounded-2xl">
-            <a href="#projects">Hire Me</a>
+            <a href="#achievements">Hire Me</a>
           </Button>
         </div>
         <div className="md:hidden flex items-center gap-2">

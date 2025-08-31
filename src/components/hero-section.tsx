@@ -64,11 +64,11 @@ export function HeroSection() {
   };
 
   const roles = [
-    "Developer",
-    "Problem Solver", 
-    "Learner",
-    "Creator",
-    "Innovator"
+    "B.Tech CSE Student",
+    "Exploring Data Science Field",
+    "Programming Enthusiast",
+    "Building Expertise in Python, Java",
+    "Driven by Insights and Innovation"
   ];
 
   return (
@@ -84,20 +84,20 @@ export function HeroSection() {
             <motion.div
               key={i}
               className="absolute w-2 h-2 bg-white/20 rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [0, -100, 0],
-                opacity: [0, 1, 0],
-                scale: [0, 1, 0],
-              }}
-              transition={{
-                duration: Math.random() * 3 + 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
+                              style={{
+                  left: `${(i * 5.5) % 100}%`,
+                  top: `${(i * 7.3) % 100}%`,
+                }}
+                animate={{
+                  y: [0, -100, 0],
+                  opacity: [0, 1, 0],
+                  scale: [0, 1, 0],
+                }}
+                transition={{
+                  duration: 3 + (i % 3),
+                  repeat: Infinity,
+                  delay: i * 0.1,
+                }}
             />
           ))}
         </div>
@@ -177,10 +177,15 @@ export function HeroSection() {
                 variants={itemVariants}
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               >
-                <motion.button
+                <motion.a
+                  href="#projects"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full transition-all duration-300 shadow-lg relative overflow-hidden"
+                  className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full transition-all duration-300 shadow-lg relative overflow-hidden cursor-pointer inline-flex items-center justify-center"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="relative flex items-center gap-2">
@@ -188,19 +193,21 @@ export function HeroSection() {
                     View Projects
                   </div>
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
-                </motion.button>
+                </motion.a>
                 
-                <motion.button
+                <motion.a
+                  href="/resume.pdf"
+                  download
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="group px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 transition-all duration-300 relative overflow-hidden"
+                  className="group px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 transition-all duration-300 relative overflow-hidden cursor-pointer inline-flex items-center justify-center"
                 >
                   <div className="relative flex items-center gap-2">
                     <FiDownload className="text-lg" />
                     Download Resume
                   </div>
                   <div className="absolute inset-0 rounded-full bg-white/20 blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
-                </motion.button>
+                </motion.a>
               </motion.div>
 
               {/* Social Links */}
@@ -209,13 +216,15 @@ export function HeroSection() {
                 className="flex gap-4 justify-center lg:justify-start mt-6"
               >
                 {[
-                  { icon: FiGithub, href: "#", label: "GitHub" },
-                  { icon: FiLinkedin, href: "#", label: "LinkedIn" },
-                  { icon: FiMail, href: "#", label: "Email" },
+                  { icon: FiGithub, href: "https://github.com/pruthvi025", label: "GitHub" },
+                  { icon: FiLinkedin, href: "https://www.linkedin.com/in/pruthviraj-thorbole-b33370294", label: "LinkedIn" },
+                  { icon: FiMail, href: "mailto:pruthviraj.thorbole@gmail.com", label: "Email" },
                 ].map((social) => (
                   <motion.a
                     key={social.label}
                     href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     className="w-10 h-10 bg-white/10 border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 backdrop-blur-sm"
@@ -274,7 +283,7 @@ export function HeroSection() {
         {/* Scroll Indicator */}
         <motion.div
           variants={itemVariants}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-8 right-8"
         >
           <div className="flex flex-col items-center text-white/60">
             <span className="text-sm mb-2">Scroll Down</span>

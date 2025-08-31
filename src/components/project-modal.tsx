@@ -118,44 +118,60 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-hidden bg-background/95 backdrop-blur-sm border border-white/10">
-        <DialogHeader>
+      <DialogContent 
+        className="!max-w-4xl !w-[95vw] max-h-[95vh] overflow-hidden bg-background/95 backdrop-blur-sm border border-white/10 p-0" 
+        showCloseButton={false}
+        onEscapeKeyDown={onClose}
+        onInteractOutside={onClose}
+      >
+        <DialogHeader className="pb-4 px-8 pt-8">
           <div className="flex items-center gap-3 mb-4">
             {getCategoryIcon(project.category)}
-            <div>
-              <DialogTitle className="text-xl font-semibold">{project.title}</DialogTitle>
-              <Badge className={`mt-1 ${getCategoryColor(project.category)}`}>
+            <div className="flex-1">
+              <DialogTitle className="text-2xl font-bold text-foreground">{project.title}</DialogTitle>
+              <Badge className={`mt-2 ${getCategoryColor(project.category)}`}>
                 {getCategoryName(project.category)}
               </Badge>
             </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onClose}
+              className="h-12 w-12 p-0 bg-white/10 hover:bg-white/20 text-white text-2xl font-bold rounded-full border border-white/30 hover:border-white/50 shadow-lg hover:shadow-xl transition-all duration-200 z-50 relative backdrop-blur-sm"
+            >
+              <span className="sr-only">Close</span>
+              ×
+            </Button>
           </div>
         </DialogHeader>
 
-        <div className="space-y-6 overflow-y-auto max-h-[calc(90vh-120px)] pr-2">
+        <div className="space-y-8 overflow-y-auto max-h-[calc(95vh-140px)] px-8 pb-8 project-modal-content">
           {/* Project Image/Icon */}
           <div className="relative h-48 w-full rounded-xl overflow-hidden bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-cyan-500/10 border border-white/10">
             <div className="absolute inset-0 flex items-center justify-center">
-              {getCategoryIcon(project.category)}
+              <div className="text-6xl text-white/60">
+                {getCategoryIcon(project.category)}
+              </div>
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
 
           {/* Description */}
           <div>
-            <h3 className="text-lg font-medium mb-2 text-foreground">Project Overview</h3>
-            <p className="text-muted-foreground leading-relaxed">{project.description}</p>
+            <h3 className="text-lg font-semibold mb-3 text-foreground">Project Overview</h3>
+            <p className="text-foreground/90 leading-relaxed text-base">{project.description}</p>
           </div>
 
           {/* Technologies */}
           {project.technologies && (
             <div>
-              <h3 className="text-lg font-medium mb-3 text-foreground">Technologies Used</h3>
+              <h3 className="text-lg font-semibold mb-3 text-foreground">Technologies Used</h3>
               <div className="flex flex-wrap gap-2">
                 {project.technologies.map((tech, index) => (
                   <Badge
                     key={index}
                     variant="secondary"
-                    className="bg-white/10 text-foreground/80 border border-white/10 hover:bg-white/20 transition-colors"
+                    className="bg-white/10 text-foreground/90 border border-white/20 hover:bg-white/20 transition-colors px-3 py-1"
                   >
                     {tech}
                   </Badge>
@@ -166,7 +182,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
 
           {/* Key Features */}
           <div>
-            <h3 className="text-lg font-medium mb-3 text-foreground">Key Features</h3>
+            <h3 className="text-lg font-semibold mb-3 text-foreground">Key Features</h3>
             <div className="grid gap-2">
               {project.category === 'ai-ml' && (
                 <>
@@ -234,15 +250,12 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-3 pt-4">
+          <div className="flex gap-3 pt-6 border-t border-white/10">
             <Button asChild className="flex-1" size="lg">
               <a href={project.github} target="_blank" rel="noopener noreferrer">
                 <Github className="mr-2 h-5 w-5" />
                 View on GitHub
               </a>
-            </Button>
-            <Button variant="outline" onClick={onClose} size="lg">
-              Close
             </Button>
           </div>
         </div>

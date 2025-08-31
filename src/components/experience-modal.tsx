@@ -84,60 +84,88 @@ export function ExperienceModal({ experience, isOpen, onClose }: ExperienceModal
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-hidden bg-background/95 backdrop-blur-sm border border-white/10">
-        <DialogHeader>
+      <DialogContent 
+        className="!max-w-4xl !w-[95vw] max-h-[95vh] overflow-hidden bg-background/95 backdrop-blur-sm border border-white/10 p-0" 
+        showCloseButton={false}
+        onEscapeKeyDown={onClose}
+        onInteractOutside={onClose}
+      >
+        <DialogHeader className="pb-4 px-8 pt-8">
           <div className="flex items-center gap-4">
-            {getIcon(experience.icon)}
-            <div>
-              <DialogTitle className="text-2xl font-bold">{experience.title}</DialogTitle>
-              <Badge className="mt-2 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-300 border-blue-500/30">
+            <div className="text-4xl">
+              {getIcon(experience.icon)}
+            </div>
+            <div className="flex-1">
+              <DialogTitle className="text-3xl font-bold text-foreground">{experience.title}</DialogTitle>
+              <Badge className="mt-3 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-300 border-blue-500/30 px-3 py-1">
                 {experience.type}
               </Badge>
             </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onClose}
+              className="h-12 w-12 p-0 bg-white/10 hover:bg-white/20 text-white text-2xl font-bold rounded-full border border-white/30 hover:border-white/50 shadow-lg hover:shadow-xl transition-all duration-200 z-50 relative backdrop-blur-sm"
+            >
+              <span className="sr-only">Close</span>
+              ×
+            </Button>
           </div>
         </DialogHeader>
         
-        <div className="space-y-6 overflow-y-auto max-h-[calc(90vh-120px)] pr-2">
+        <div 
+          className="space-y-8 overflow-y-auto max-h-[calc(95vh-160px)] px-8 pb-8 experience-modal-content" 
+          style={{ 
+            scrollbarWidth: 'thin', 
+            scrollbarGutter: 'stable',
+            minHeight: '400px' // Ensure minimum height for scrolling
+          }}
+        >
           <div className="space-y-4">
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Building2 className="h-4 w-4" />
-                <span><span className="font-medium">Company:</span> {experience.company}</span>
+            <div className="grid sm:grid-cols-2 gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
+              <div className="flex items-center gap-2 text-foreground/80">
+                <Building2 className="h-5 w-5 text-blue-400" />
+                <span><span className="font-medium text-foreground">Company:</span> {experience.company}</span>
               </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Calendar className="h-4 w-4" />
-                <span><span className="font-medium">Duration:</span> {experience.duration}</span>
+              <div className="flex items-center gap-2 text-foreground/80">
+                <Calendar className="h-5 w-5 text-green-400" />
+                <span><span className="font-medium text-foreground">Duration:</span> {experience.duration}</span>
               </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <MapPin className="h-4 w-4" />
-                <span><span className="font-medium">Location:</span> {experience.location}</span>
+              <div className="flex items-center gap-2 text-foreground/80">
+                <MapPin className="h-5 w-5 text-purple-400" />
+                <span><span className="font-medium text-foreground">Location:</span> {experience.location}</span>
               </div>
             </div>
             
             <div>
-              <h3 className="text-lg font-semibold mb-2">Overview</h3>
-              <p className="text-muted-foreground leading-relaxed">{experience.description}</p>
+              <h3 className="text-xl font-semibold mb-3 text-foreground">Overview</h3>
+              <p className="text-foreground/90 leading-relaxed text-base">{experience.description}</p>
+              <div className="mt-4 p-4 rounded-xl bg-white/5 border border-white/10">
+                <p className="text-foreground/80 text-sm leading-relaxed">
+                  This role provided valuable hands-on experience in {experience.type.toLowerCase()} and contributed significantly to my professional growth and technical skills development.
+                </p>
+              </div>
             </div>
             
             <div>
-              <h3 className="text-lg font-semibold mb-2">Key Achievements</h3>
-              <ul className="space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-foreground">Key Achievements</h3>
+              <ul className="space-y-3">
                 {experience.achievements.map((achievement, i) => (
-                  <li key={i} className="text-muted-foreground leading-relaxed flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
-                    {achievement}
+                  <li key={i} className="text-foreground/90 leading-relaxed flex items-start gap-3">
+                    <span className="text-blue-400 mt-1 text-lg">•</span>
+                    <span className="text-base">{achievement}</span>
                   </li>
                 ))}
               </ul>
             </div>
             
             <div>
-              <h3 className="text-lg font-semibold mb-2">Technologies Used</h3>
+              <h3 className="text-xl font-semibold mb-3 text-foreground">Technologies Used</h3>
               <div className="flex flex-wrap gap-2">
                 {experience.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className="text-sm rounded-full px-3 py-1 text-foreground bg-gradient-to-r from-white/10 to-white/5 border border-white/10"
+                    className="text-sm rounded-full px-3 py-1 text-foreground/90 bg-gradient-to-r from-white/10 to-white/5 border border-white/20 hover:bg-white/20 transition-colors"
                   >
                     {tech}
                   </span>
@@ -146,11 +174,11 @@ export function ExperienceModal({ experience, isOpen, onClose }: ExperienceModal
             </div>
           </div>
           
-          <div className="flex gap-3 pt-4">
-            <Button variant="outline" onClick={onClose} className="flex-1">
-              Close
-            </Button>
-          </div>
+          {/* Bottom spacing for scrollbar visibility */}
+          <div className="h-8"></div>
+          
+          {/* Additional spacing to ensure scrollbar visibility */}
+          <div className="h-8"></div>
         </div>
       </DialogContent>
     </Dialog>

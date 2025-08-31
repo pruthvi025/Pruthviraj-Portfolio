@@ -59,10 +59,16 @@ export function SocialDock() {
 
   const handleClick = (href: string) => {
     if (href.startsWith("#")) {
-      // Smooth scroll to section
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+      // Use global Lenis instance for smooth scroll to section
+      const lenis = (window as any).lenis;
+      if (lenis) {
+        lenis.scrollTo(href, { duration: 1.2 });
+      } else {
+        // Fallback to native scroll
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
       }
     } else {
       // Open external link

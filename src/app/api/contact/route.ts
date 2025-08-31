@@ -18,13 +18,6 @@ type ContactSubmission = z.infer<typeof ContactSchema> & {
   userAgent?: string;
 };
 
-// Email configuration from environment variables
-const EMAIL_CONFIG = {
-  to: process.env.CONTACT_EMAIL || "your-email@gmail.com",
-  from: process.env.CONTACT_FROM || "portfolio-contact@yourdomain.com",
-  subject: "New Contact Form Submission - Portfolio",
-};
-
 export async function POST(req: Request) {
   try {
     const json = await req.json();
@@ -54,11 +47,18 @@ export async function POST(req: Request) {
     // Store the contact submission locally
     await storeContactSubmission(submission);
 
-    // Send email notification
+    // Try to send email notification
     const emailSent = await sendEmailNotification(submission);
     
     if (!emailSent) {
       console.warn("Failed to send email notification for submission:", submission.id);
+      // Still return success but with a different message
+      return Response.json({ 
+        success: true, 
+        message: "Thank you! Your message has been received. I'll get back to you soon.",
+        submissionId: submission.id,
+        note: "Email notification not configured - message stored locally"
+      });
     }
 
     return Response.json({ 
@@ -142,24 +142,14 @@ async function getContactSubmissions(): Promise<ContactSubmission[]> {
 
 async function sendEmailNotification(submission: ContactSubmission): Promise<boolean> {
   try {
-    // Method 1: Using Resend (Recommended - Free tier available)
-    if (process.env.RESEND_API_KEY) {
-      return await sendEmailWithResend(submission);
-    }
-    
-    // Method 2: Using Gmail SMTP (Free but requires app password)
+    // Method 1: Using Gmail SMTP
     if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
       return await sendEmailWithGmail(submission);
-    }
-    
-    // Method 3: Using Nodemailer with any SMTP service
-    if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
-      return await sendEmailWithSMTP(submission);
     }
 
     // Fallback: Log to console (for development)
     console.log("📧 EMAIL NOTIFICATION (Development Mode):", {
-      to: EMAIL_CONFIG.to,
+      to: process.env.CONTACT_EMAIL || "your-email@gmail.com",
       from: submission.email,
       subject: `New Contact: ${submission.name}`,
       message: submission.message,
@@ -167,7 +157,9 @@ async function sendEmailNotification(submission: ContactSubmission): Promise<boo
       ip: submission.ip,
     });
     
-    return true; // Return true for development mode
+    // For development/deployment without email config, we'll consider this successful
+    // since the message is stored locally and can be retrieved
+    return true;
     
   } catch (error) {
     console.error("Failed to send email notification:", error);
@@ -175,39 +167,12 @@ async function sendEmailNotification(submission: ContactSubmission): Promise<boo
   }
 }
 
-// Method 1: Resend (Recommended - Modern, reliable, free tier)
-async function sendEmailWithResend(submission: ContactSubmission): Promise<boolean> {
-  try {
-    const resend = require('resend');
-    const client = new resend(process.env.RESEND_API_KEY);
-    
-    const { data, error } = await client.emails.send({
-      from: EMAIL_CONFIG.from,
-      to: EMAIL_CONFIG.to,
-      subject: `New Contact Form Submission: ${submission.name}`,
-      html: generateEmailHTML(submission),
-      text: generateEmailText(submission),
-    });
-
-    if (error) {
-      console.error("Resend error:", error);
-      return false;
-    }
-
-    console.log("Email sent successfully via Resend:", data.id);
-    return true;
-  } catch (error) {
-    console.error("Resend email error:", error);
-    return false;
-  }
-}
-
-// Method 2: Gmail SMTP
+// Gmail SMTP
 async function sendEmailWithGmail(submission: ContactSubmission): Promise<boolean> {
   try {
-    const nodemailer = require('nodemailer');
+    const nodemailer = await import('nodemailer');
     
-    const transporter = nodemailer.createTransport({
+    const transporter = nodemailer.default.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.GMAIL_USER,
@@ -217,7 +182,7 @@ async function sendEmailWithGmail(submission: ContactSubmission): Promise<boolea
 
     const mailOptions = {
       from: process.env.GMAIL_USER,
-      to: EMAIL_CONFIG.to,
+      to: process.env.CONTACT_EMAIL || process.env.GMAIL_USER,
       subject: `New Contact Form Submission: ${submission.name}`,
       html: generateEmailHTML(submission),
       text: generateEmailText(submission),
@@ -228,38 +193,6 @@ async function sendEmailWithGmail(submission: ContactSubmission): Promise<boolea
     return true;
   } catch (error) {
     console.error("Gmail email error:", error);
-    return false;
-  }
-}
-
-// Method 3: Custom SMTP
-async function sendEmailWithSMTP(submission: ContactSubmission): Promise<boolean> {
-  try {
-    const nodemailer = require('nodemailer');
-    
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_SECURE === 'true',
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
-
-    const mailOptions = {
-      from: process.env.SMTP_USER,
-      to: EMAIL_CONFIG.to,
-      subject: `New Contact Form Submission: ${submission.name}`,
-      html: generateEmailHTML(submission),
-      text: generateEmailText(submission),
-    };
-
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully via SMTP:", info.messageId);
-    return true;
-  } catch (error) {
-    console.error("SMTP email error:", error);
     return false;
   }
 }

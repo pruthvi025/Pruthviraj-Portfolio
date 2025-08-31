@@ -68,6 +68,201 @@ body[style*="overflow: hidden"] {
   height: 100% !important;
 }
 
+/* Modal Content Scrollbar Styles - Applied to ALL modals */
+.project-modal-content,
+.achievement-modal-content,
+.experience-modal-content {
+  max-height: 95vh !important;
+  overflow-y: auto !important;
+}
+
+.project-modal-content::-webkit-scrollbar,
+.achievement-modal-content::-webkit-scrollbar,
+.experience-modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.project-modal-content::-webkit-scrollbar-track,
+.achievement-modal-content::-webkit-scrollbar-track,
+.experience-modal-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.project-modal-content::-webkit-scrollbar-thumb,
+.achievement-modal-content::-webkit-scrollbar-thumb,
+.experience-modal-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.project-modal-content::-webkit-scrollbar-thumb:hover,
+.achievement-modal-content::-webkit-scrollbar-thumb:hover,
+.experience-modal-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Firefox scrollbar styles */
+.project-modal-content,
+.achievement-modal-content,
+.experience-modal-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
+}
+
+/* Ensure scrollbars are always visible on mobile */
+@media (max-width: 768px) {
+  .project-modal-content::-webkit-scrollbar,
+  .achievement-modal-content::-webkit-scrollbar,
+  .experience-modal-content::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .project-modal-content::-webkit-scrollbar-thumb,
+  .achievement-modal-content::-webkit-scrollbar-thumb,
+  .experience-modal-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  /* Mobile experience modal scrollbar */
+  .experience-modal-content::-webkit-scrollbar {
+    width: 8px !important;
+  }
+  
+  .experience-modal-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.4) !important;
+  }
+}
+
+/* Ensure modal displays properly */
+[data-radix-dialog-content] {
+  max-width: none !important;
+  width: 95vw !important;
+  max-height: 95vh !important;
+  overflow: hidden !important;
+}
+
+/* Force scrollbar visibility on all modal content */
+.project-modal-content,
+.achievement-modal-content,
+.experience-modal-content {
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure close buttons are always visible in modals */
+[data-radix-dialog-content] button[onClick*="onClose"] {
+  z-index: 10001 !important;
+  position: relative !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+[data-radix-dialog-content] button[onClick*="onClose"]:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  transform: scale(1.05) !important;
+}
+
+/* Ensure experience modal scrollbar is always visible */
+.experience-modal-content {
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1) !important;
+}
+
+.experience-modal-content::-webkit-scrollbar {
+  width: 10px !important;
+}
+
+.experience-modal-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 5px !important;
+}
+
+.experience-modal-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-radius: 5px !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.experience-modal-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Fix modal positioning */
+[data-radix-dialog-content] .project-modal-content {
+  padding: 0 2rem 2rem 2rem !important;
+}
+
+/* Ensure proper z-index for modal */
+[data-radix-dialog-overlay] {
+  z-index: 9999 !important;
+}
+
+[data-radix-dialog-content] {
+  z-index: 10000 !important;
+}
+
+/* Ensure close buttons are above all modal content */
+[data-radix-dialog-content] .flex.items-center.gap-4 button {
+  z-index: 10001 !important;
+  position: relative !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Additional close button visibility */
+[data-radix-dialog-content] button[onClick*="onClose"] {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Professional close button styling */
+[data-radix-dialog-content] button[onClick*="onClose"] {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  font-weight: bold !important;
+  z-index: 10001 !important;
+  position: relative !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-radix-dialog-content] button[onClick*="onClose"]:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  transform: scale(1.05) !important;
+}
+
+/* Mobile responsive modal */
+@media (max-width: 768px) {
+  [data-radix-dialog-content] {
+    width: 98vw !important;
+    max-height: 98vh !important;
+    margin: 1vh !important;
+  }
+  
+  [data-radix-dialog-content] .project-modal-content {
+    padding: 0 1rem 1rem 1rem !important;
+  }
+  
+  /* Mobile close button visibility */
+  [data-radix-dialog-content] button[onClick*="onClose"] {
+    width: 3rem !important;
+    height: 3rem !important;
+    font-size: 1.5rem !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  }
+  
+  .project-modal-content {
+    max-height: calc(98vh - 120px) !important;
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

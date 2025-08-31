@@ -3,13 +3,11 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-// removed category Tabs from Projects section
 import { Github, Globe, Linkedin, Twitter, Code2, Brain, Database, Mail, Phone } from "lucide-react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { ContactForm } from "@/components/contact-form";
 import { Particles } from "@/components/particles";
-// removed radial progress for a cleaner about section
 import { Typewriter } from "@/components/typewriter";
 import { Waves } from "@/components/waves";
 import { SmoothScroll } from "@/components/smooth-scroll";
@@ -24,6 +22,8 @@ import { Badge } from "@/components/ui/badge";
 import { ExternalLink } from "lucide-react";
 import { SocialDock } from "@/components/social-dock";
 import { WelcomePopup } from "@/components/welcome-popup";
+import { HeroSection } from "@/components/hero-section";
+import { AboutSection } from "@/components/about-section";
 
 type Project = {
   id: number;
@@ -79,85 +79,9 @@ export default function Home() {
       <ScrollToTop />
       <WelcomePopup />
     <main className="min-h-screen bg-background text-foreground pt-16">
-      <section id="hero" className="relative grid place-items-center min-h-[100svh] overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(1200px_600px_at_50%_-10%,oklch(0.35_0.15_260_/_35%)_0,transparent_70%),radial-gradient(800px_300px_at_80%_10%,oklch(0.6_0.2_200_/_25%)_0,transparent_60%)]" />
-        <Particles density={100} />
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="relative z-10 w-full px-6">
-          <div className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[1.2fr_0.8fr]">
-            <div className="text-left">
-              <h1 className="text-5xl md:text-7xl font-semibold tracking-tight">Hi, I'm Pruthviraj <span className="select-none">👋</span></h1>
-              <p className="mt-4 text-lg md:text-xl text-muted-foreground">Developer & Problem Solver | Empowering projects & growth | Consistent delivery & logical thinking</p>
-              <p className="mt-4 text-base md:text-lg text-muted-foreground">
-                <Typewriter words={["B.Tech CSE Student", "Data Science Explorer", "Programming Enthusiast", "Driven by Insights & Innovation"]} />
-              </p>
-              <div className="mt-8 flex items-center gap-3">
-                <Button asChild className="rounded-2xl shadow-[0_0_0_0_rgba(0,0,0,0)] hover:shadow-[0_0_30px_4px_hsl(260_80%_60%_/0.25)] transition-transform hover:scale-[1.03]">
-                  <a href="#projects">View Projects</a>
-                </Button>
-                <Button asChild variant="secondary" className="rounded-2xl transition-transform hover:scale-[1.03]">
-                  <a href="/resume.pdf" download>Download Resume</a>
-                </Button>
-              </div>
-            </div>
-            <div className="flex justify-center md:justify-end">
-              {!imgError ? (
-                <div className="relative h-40 w-40 md:h-52 md:w-52 overflow-hidden rounded-full ring-2 ring-primary/40 shadow-xl">
-                  <Image src="/profile.jpg" alt="Pruthviraj Thorbole" fill sizes="208px" className="object-cover transition-transform duration-300 hover:scale-105" onError={() => setImgError(true)} />
-                </div>
-              ) : (
-                <div className="h-40 w-40 md:h-52 md:w-52 rounded-full ring-2 ring-primary/40 shadow-xl grid place-items-center bg-[radial-gradient(circle_at_30%_30%,hsl(260_80%_60%/.35),transparent_60%)] text-xl md:text-2xl">PT</div>
-              )}
-            </div>
-        </div>
-        </motion.div>
-          {/* Floating gradient blobs for extra dynamics */}
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute -z-10 left-[10%] top-[20%] h-48 w-48 rounded-full bg-[radial-gradient(circle_at_30%_30%,hsl(260_80%_60%/.6),transparent_60%)] blur-2xl"
-            animate={{ y: [0, -10, 0], x: [0, 10, 0] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute -z-10 right-[12%] bottom-[10%] h-56 w-56 rounded-full bg-[radial-gradient(circle_at_70%_70%,hsl(200_90%_55%/.6),transparent_60%)] blur-2xl"
-            animate={{ y: [0, 12, 0], x: [0, -12, 0] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          />
-        <Waves />
-      </section>
-      
-      
-
-      
-
-      
-
-      
-
-      <section id="about" className="container mx-auto px-6 py-20">
-        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="grid gap-8 place-items-center">
-          <Card className="rounded-2xl w-full max-w-3xl bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-cyan-500/10">
-            <CardContent className="p-8 md:p-10 flex flex-col items-center text-center gap-4 backdrop-blur-sm border border-white/10">
-              <div>
-                <h3 className="text-2xl font-semibold flex items-center justify-center gap-2">🚀 About Me</h3>
-                <motion.div className="text-muted-foreground mt-2 space-y-3 text-center" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.15 }}>
-                  <p>
-                    I’m a third-year B.Tech CSE student with strong foundations in OOPs, DBMS, OS, CN, and COA, and hands-on
-                    experience in C, C++, Java, and Python. Skilled in Git & GitHub, I enjoy building efficient and impactful
-                    solutions.
-                  </p>
-                  <p>
-                    My interests span across Data Science, Machine Learning, Deep Learning, and Natural Language Processing, where I
-                    aim to apply my skills to real-world, innovative projects. Alongside technology, I’m also learning Spanish,
-                    expanding my global perspective.
-                  </p>
-                  <p>🚀 Driven by curiosity, I strive to grow as a versatile engineer and contribute to meaningful tech advancements.</p>
-                </motion.div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      </section>
+        <HeroSection />
+        
+        <AboutSection />
 
       <section id="achievements" className="container mx-auto px-6 py-20">
         <ScrollAnimation direction="up" delay={0.2}>
@@ -168,7 +92,7 @@ export default function Home() {
                   <h2 className="text-2xl font-semibold text-center">Achievements & Milestones</h2>
                   <p className="text-center text-muted-foreground mt-1">Highlights that showcase my technical growth and academic excellence</p>
                 </ScrollAnimation>
-                                <StaggerAnimation className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" staggerDelay={0.1}>
+                                  <StaggerAnimation className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" staggerDelay={0.1}>
                   {[
                     { 
                       icon: "🎓", 
@@ -216,20 +140,63 @@ export default function Home() {
                       impact: "This leadership position showcases my organizational abilities, communication skills, and commitment to helping fellow students succeed in their careers. It demonstrates my ability to take responsibility and manage important institutional initiatives."
                     },
                 ].map((a, idx) => (
-                    <div 
+                      <motion.div 
                       key={a.title} 
-                      className="rounded-2xl relative overflow-hidden group cursor-pointer"
+                        className="group cursor-pointer"
                       onClick={() => handleAchievementClick(a)}
-                    >
-                      <div className={`absolute inset-0 bg-gradient-to-br ${a.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                      <div className="relative h-full w-full backdrop-blur-sm bg-background/40 border border-white/10 rounded-2xl p-5 md:p-6 transition-all duration-300 hover:scale-[1.02] shadow-sm hover:shadow-[0_0_30px_0_rgba(99,102,241,.25)]">
-                        <div className="flex items-center gap-3 mb-3">
-                          <span className="text-2xl">{a.icon}</span>
-                          <h5 className="font-semibold text-lg">{a.title}</h5>
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ 
+                          duration: 0.6,
+                          delay: idx * 0.1,
+                          type: "spring",
+                          stiffness: 100,
+                          damping: 20
+                        }}
+                        whileHover={{ 
+                          y: -8,
+                          transition: { type: "spring", stiffness: 400, damping: 10 }
+                        }}
+                      >
+                        {/* Main card with glassmorphism effect */}
+                        <div className="relative rounded-2xl overflow-hidden">
+                          {/* Gradient border effect on hover */}
+                          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-[2px]">
+                            <div className="w-full h-full rounded-2xl bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500"></div>
+                          </div>
+                          
+                          {/* Main card content - always visible */}
+                          <div className="relative backdrop-blur-md bg-white/10 dark:bg-white/10 bg-gray-900/10 border border-white/20 dark:border-white/20 border-gray-700/30 rounded-2xl p-6 md:p-7 transition-all duration-500 group-hover:scale-105 group-hover:shadow-2xl group-hover:shadow-purple-500/50">
+                              {/* Icon with animation */}
+                              <motion.div 
+                                className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 dark:from-white/20 dark:to-white/10 from-gray-200 to-gray-100 mb-4 mx-auto"
+                                whileHover={{ 
+                                  scale: 1.1,
+                                  rotate: 5,
+                                  transition: { duration: 0.6, type: "spring" }
+                                }}
+                              >
+                                <span className="text-3xl">{a.icon}</span>
+                              </motion.div>
+                              
+                              {/* Title */}
+                              <h5 className="font-bold text-xl text-center mb-3 text-white dark:text-white text-gray-900 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-400 transition-all duration-500">
+                                {a.title}
+                              </h5>
+                              
+                              {/* Description */}
+                              <p className="text-sm text-white/80 dark:text-white/80 text-gray-700 leading-relaxed text-center group-hover:text-white/90 dark:group-hover:text-white/90 group-hover:text-gray-800 transition-colors duration-300">
+                                {a.desc}
+                              </p>
+                              
+                              {/* Hover indicator */}
+                              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                <div className="w-8 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"></div>
+                              </div>
+                            </div>
                         </div>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{a.desc}</p>
-                      </div>
-                    </div>
+                      </motion.div>
                 ))}
                 </StaggerAnimation>
             </CardContent>
