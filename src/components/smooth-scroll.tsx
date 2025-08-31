@@ -12,18 +12,7 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
-      direction: "vertical", // vertical, horizontal
-      gestureDirection: "vertical", // vertical, horizontal, both
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
-      // Enhanced settings for better performance
       lerp: 0.1, // Linear interpolation for smoother movement
-      syncTouch: true, // Sync touch events
-      syncTouchLerp: 0.1, // Touch lerp value
-      touchInertiaMultiplier: 7, // Touch inertia
     });
 
     // Make lenis globally available for other components
@@ -47,7 +36,7 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
         const href = anchor.getAttribute('href');
         if (href) {
           const targetElement = document.querySelector(href);
-          if (targetElement) {
+          if (targetElement && targetElement instanceof HTMLElement) {
             lenis.scrollTo(targetElement, {
               duration: 1.5,
               easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

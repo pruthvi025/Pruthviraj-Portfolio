@@ -149,7 +149,7 @@ export function HeroSection() {
                 className="mb-6"
               >
                 <div className="text-xl lg:text-2xl text-blue-300 font-medium min-h-[2rem]">
-                  I'm a{" "}
+                  I&apos;m a{" "}
                   <motion.span
                     key={currentRoleIndex}
                     initial={{ opacity: 0, y: 10 }}
@@ -212,7 +212,7 @@ export function HeroSection() {
                   { icon: FiGithub, href: "#", label: "GitHub" },
                   { icon: FiLinkedin, href: "#", label: "LinkedIn" },
                   { icon: FiMail, href: "#", label: "Email" },
-                ].map((social, index) => (
+                ].map((social) => (
                   <motion.a
                     key={social.label}
                     href={social.href}
