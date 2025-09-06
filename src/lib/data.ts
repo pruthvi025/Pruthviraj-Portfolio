@@ -14,7 +14,7 @@ export const projects = [
     description: "Modern, responsive portfolio website built with Next.js and TypeScript. Features smooth animations, dark mode, and optimized performance.",
     category: "web",
     image: "/window.svg",
-    github: "https://github.com/pruthvi025/portfolio-website",
+    github: "https://github.com/pruthvi025/Pruthviraj-Portfolio",
     technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Lenis"],
   },
 ];
